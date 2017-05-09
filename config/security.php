@@ -4,6 +4,6 @@
             'login', 'index', 'register'
         ],
         'routes_poslogin' => [
-            'login','index', 'logout', 'admuser'
+            'index', 'logout', 'usermanagement', 'bookmanagement', 'loanmanagement'
         ],
     ];

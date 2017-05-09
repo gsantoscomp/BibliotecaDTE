@@ -12,12 +12,20 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // Criar usuario Administrador
-
-        User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@admin.com',
-            'password' => bcrypt('123456')
-        ]);
+        $faker = Faker\Factory::create('pt_BR');
+        for($i = 0; $i < 5; $i++){
+            $user = new User();
+            if($i == 0){
+                $user->name = 'admin';
+                $user->email = 'admin@admin.com';
+                $user->password = bcrypt('123456');
+            }
+            else{
+                $user->name = $faker->lastName;
+                $user->email = $faker->email;
+                $user->password = bcrypt('123456');
+            }
+            $user->save();
+        }
     }
 }

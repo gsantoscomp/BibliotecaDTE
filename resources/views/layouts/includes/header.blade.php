@@ -1,7 +1,7 @@
 <header class="main-header">
 
-    <a href="{{url('/')}}" class="logo">
-        <span class="logo-mini">DTE</span>
+    <a class="logo">
+        <span class="logo-mini"><i class="fa fa-coffee"></i></span>
         <span class="logo-lg">DTE - Livros</span>
     </a>
 
@@ -16,7 +16,7 @@
                     <a href="{{route('logout')}}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                         <i class="fa fa-unlock-alt"></i> Sair do sistema</a>
                     </a>
-                    <form id="logout-form" action="{{route('logout')}}" method="POST" style="display: none;">
+                    <form id="logout-form" action="{{route('logout')}}" method="GET" style="display: none;">
                         <input name="_token" value="{{csrf_token()}}" type="hidden">
                     </form>
                 </li>

@@ -7,16 +7,36 @@ class PermissionsSeeder extends Seeder
 {
     public function run()
     {
-        $arrPermissions = [];
-
-        $permission = Permission::create([
+        $index = Permission::create([
             'name' => 'index',
             'route' => 'index'
         ]);
 
-        $arrPermissions[] = $permission->id;
+        $userManagement = Permission::create([
+            'name' => 'usermanagement',
+            'route' => 'usermanagement'
+        ]);
+
+        $bookManagement = Permission::create([
+            'name' => 'bookmanagement',
+            'route' => 'bookmanagement'
+        ]);
+
+        $loanManagement = Permission::create([
+            'name' => 'loanmanagement',
+            'route' => 'loanmanagement'
+        ]);
+
+        $arrPermissions = [
+            $index->id,
+            $userManagement->id,
+            $bookManagement->id,
+            $loanManagement->id
+        ];
 
         $roleAdmin = Role::where('id', 1)->first();
+
+//        $roleUSer = Role::where()->first();
 
         $roleAdmin->permissions()->attach($arrPermissions);
     }

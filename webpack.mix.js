@@ -18,6 +18,7 @@ mix.styles([
     "node_modules/admin-lte/dist/css/skins/_all-skins.css",
     "node_modules/admin-lte/dist/css/AdminLTE.css",
     "node_modules/admin-lte/plugins/iCheck/square/_all.css",
+    "node_modules/font-awesome/css/font-awesome.css",
     "resources/assets/css/custom.css"
 ], "public/css/app.css");
 
@@ -35,6 +36,7 @@ mix.scripts([
 
 // Fonts
 mix.copy("node_modules/admin-lte/bootstrap/fonts", "public/fonts");
+mix.copy("node_modules/font-awesome/fonts", "public/fonts");
 
 // Img
 mix.copy("node_modules/admin-lte/dist/img/", "public/img/");

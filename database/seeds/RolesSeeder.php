@@ -1,19 +1,29 @@
 <?php
+
+use App\Models\User;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 
-/**
- * Created by PhpStorm.
- * User: uemanet
- * Date: 04/05/17
- * Time: 16:20
- */
 class RolesSeeder extends Seeder
 {
     public function run()
     {
-        Role::create([
-           'name' => 'Admin'
+        $adminRole = Role::create([
+            'name' => 'Admin'
         ]);
+
+        $userRole = Role::create([
+            'name' => 'User'
+        ]);
+
+        $admin = User::where('id', 1)->first();
+        $users = User::where('id', '>', 1)->get();
+
+        $admin->roles()->attach($adminRole);
+
+        foreach ($users as $user)
+        {
+            $user->roles()->attach($userRole);
+        }
     }
 }
