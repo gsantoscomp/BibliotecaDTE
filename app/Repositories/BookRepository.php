@@ -12,6 +12,7 @@ class BookRepository
         $query = DB::table('books')
                     ->join('publishers', 'books.bk_pub_id', 'pub_id')
                     ->select('books.*', 'pub_name', 'pub_id')
+                    ->orderBy('bk_title')
                     ->get();
 
         return $query;
@@ -28,16 +29,18 @@ class BookRepository
 
     public function addBook($request)
     {
-        $query = Book::create([
-            'bk_title' => $request->bk_name,
-            'bk_author' => $request->bk_author,
-            'bk_owner' => $request->bk_owner,
-            'bk_description' => $request->bk_description,
-            'bk_availability' => true,
-            'bk_pub_id' => $request->bk_pub_id,
-        ]);
+        $book = new Book();
 
-        return $query;
+        $book->bk_title = $request->bk_title;
+        $book->bk_author = $request->bk_author;
+        $book->bk_owner = $request->bk_owner;
+        $book->bk_description = $request->bk_description;
+        $book->bk_availability = 'disponivel';
+        $book->bk_pub_id = $request->bk_pub_id;
+
+        $book->save();
+
+        return $book;
     }
 
 }

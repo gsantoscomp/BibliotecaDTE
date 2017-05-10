@@ -45,7 +45,8 @@
                             </h4>
                         </div>
                         <div class="modal-body">
-                            <form id="modal-form" autocomplete="off">
+                            <form action="{{ route('usermanagement') }}" id="modal-form" method="post" autocomplete="off">
+                                {{ csrf_field() }}
                                 @yield('modalForm')
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -140,9 +141,10 @@
     }
     function onClickBtnDelete(){
         $(".items:checked").each(function(){
+
             var row = $(this).closest('tr');
             var bookId = row.children('td:first-child').children('input:nth-child(2)').val();
-            var id = $(this).val();
+            var id = $(this).val(); console.log(id);
             var url = @yield('url');
             $.ajax({
                 url : url + id,
@@ -151,7 +153,7 @@
                     _token : token,
                     _method : "DELETE",
                 },
-                success : function(data) {
+                success : function(response) {
                     row.remove();
                     $('#loanBookOption' + bookId).removeClass('hidden');
                     var empty = isEmpty($('#table').children('tbody').children().length);
@@ -159,6 +161,7 @@
                         $('#table').empty();
                         $('#table').append('<p id="p">Não foram encontrados resultados.</p>');
                     }
+//                    console.log(response);
                 },
                 error : function(response) {
                     console.log(response);

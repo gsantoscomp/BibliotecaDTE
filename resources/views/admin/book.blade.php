@@ -10,8 +10,8 @@
 
 @section('modalForm')
     <div class="form-group">
-        <label for="bk_name" class="control-label">Título:</label>
-        <input type="text" class="form-control" name="bk_name" id="bk_name">
+        <label for="bk_title" class="control-label">Título:</label>
+        <input type="text" class="form-control" name="bk_title" id="bk_title">
     </div>
     <div class="form-group">
         <label for="bk_author" class="control-label">Autor:</label>
@@ -48,7 +48,7 @@
         <th class="options hidden">
             <input id="check-all" type="checkbox">
         </th>
-        <th>Nome</th>
+        <th>Título</th>
         <th>Autor</th>
         <th>Editora</th>
         <th>Dono</th>
@@ -71,7 +71,7 @@
             <td>{{ $book->bk_owner }}</td>
             <td>{{ $book->bk_description }}</td>
             <td>
-                @if ($book->bk_availability == true)
+                @if ($book->bk_availability == 'disponivel')
                     <span style="color:green">Disponível</span>
                 @else
                     <span style="color:red">Indisponível</span>
@@ -82,7 +82,7 @@
 @endsection
 
 @section('url')
-    '/book'
+    "/book/"
 @endsection
 
 @section('scripts')
@@ -90,19 +90,19 @@
         $(document).ready(function(){
             $("#btn-confirm").on("click", function(e){
                 e.preventDefault();
-                var name = $("#bk_name").val();
-                var author = $("#bk_author").val();
-                var publisher = $("#bk_pub_id").val();
-                var owner = $("#bk_owner").val();
-                var description = $("#bk_description").val();
-                var token = $("meta[name=csrf-token]").attr("content");
-                var pubName = $("#bookPublisherOption"+publisher).text();
+                var title = $("#bk_title").val(); console.log(title);
+                var author = $("#bk_author").val(); console.log(author);
+                var publisher = $("#bk_pub_id").val(); console.log(publisher);
+                var owner = $("#bk_owner").val(); console.log(owner);
+                var description = $("#bk_description").val(); console.log(description);
+                var token = $("meta[name=csrf-token]").attr("content"); console.log(token);
+                var pubName = $("#bookPublisherOption"+publisher).text(); console.log(pubName);
                 $.ajax({
                     url : "/book",
                     method : "POST",
                     data : {
                         _token : token,
-                        bk_name : name,
+                        bk_title : title,
                         bk_author: author,
                         bk_owner : owner,
                         bk_pub_id : publisher,
@@ -115,7 +115,7 @@
                             '<td class="options hidden">' +
                             '<input class="items" type="checkbox" value='+ data.bk_id +'>' +
                             '</td>' +
-                            '<td>' + name + '</td>' +
+                            '<td>' + title + '</td>' +
                             '<td>' + author + '</td>' +
                             '<td>' + pubName + '</td>' +
                             '<td>' + owner + '</td>' +
@@ -131,12 +131,12 @@
                                 '<th class="options hidden">' +
                                 '<input id="check-all" type="checkbox">' +
                                 '</th>' +
-                                '<th>Nome</th>' +
+                                '<th>Título</th>' +
                                 '<th>Autor</th>' +
                                 '<th>Editora</th>' +
                                 '<th>Dono</th>' +
                                 '<th>Descrição</th>' +
-                                '<th>Status</th>'
+                                '<th>Status</th>' +
                             '</tr>' +
                             '</thead>';
                             $('#table').append(thead);

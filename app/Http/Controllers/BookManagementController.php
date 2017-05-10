@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
+use App\Models\Book;
 use App\Repositories\BookRepository;
 use Illuminate\Http\JsonResponse;
 
@@ -22,9 +23,24 @@ class BookManagementController extends Controller
 
     public function store(BookRequest $request)
     {
-        $bookRepository = new BookRepository();
-        $book = $bookRepository->addBook($request);
+        try {
+
+            $bookRepository = new BookRepository();
+            $book = $bookRepository->addBook($request);
+
+            return new JsonResponse([$book, 200]);
+
+        } catch(\Exception $e){
+            throw $e;
+         }
+    }
+
+    public function destroy(Book $book)
+    {
+
+        $book->delete();
 
         return new JsonResponse([$book, 200]);
+
     }
 }
