@@ -16,10 +16,10 @@ class UserRepository
     public function getUser()
     {
         $query = DB::table('users')
-            ->join('users_roles as ur', 'users.id', '=', 'ur.user_id')
-            ->join('roles', 'ur.role_id', '=', 'roles.id')
-            ->select('users.*', 'roles.name as role')
-            ->get();
+                ->join('users_roles as ur', 'users.id', '=', 'ur.user_id')
+                ->join('roles', 'ur.role_id', '=', 'roles.id')
+                ->select('users.*', 'roles.name as role')
+                ->get();
 
         return $query;
     }
@@ -35,5 +35,13 @@ class UserRepository
         $user->save();
 
         return $user;
+    }
+
+    public function deleteUser($id)
+    {
+        $query = DB::table('users')
+                ->where('id', $id)
+                ->delete();
+        return $query;
     }
 }

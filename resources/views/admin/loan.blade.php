@@ -56,6 +56,10 @@
     '/loan'
 @endsection
 
+@section('cols')
+    <div class="col-md-6">
+@endsection
+
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function()

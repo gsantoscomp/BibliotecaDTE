@@ -32,11 +32,11 @@ Route::group(['middleware' => 'securitymiddleware'], function(){
         // Admin Routes
         Route::get('user', 'UserManagementController@index')->name('usermanagement');
         Route::post('user', 'UserManagementController@store')->name('usermanagement');
-        Route::delete('user/{user}', 'UserManagementController@destroy')->name('usermanagement.destroy');
+        Route::delete('user/{id}', 'UserManagementController@destroy')->name('user.destroy');
 
         Route::get('book', 'BookManagementController@index')->name('bookmanagement');
         Route::post('book', 'BookManagementController@store')->name('bookmanagement');
-        Route::delete('book/{book}', 'BookManagementController@destroy')->name('bookmanagement.destroy');
+        Route::delete('book/{id}', 'BookManagementController@destroy')->name('book.destroy');
 
         Route::get('loan', 'LoanManagementController@index')->name('loanmanagement');
     });

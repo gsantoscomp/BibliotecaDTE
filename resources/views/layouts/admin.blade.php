@@ -45,8 +45,7 @@
                             </h4>
                         </div>
                         <div class="modal-body">
-                            <form action="{{ route('usermanagement') }}" id="modal-form" method="post" autocomplete="off">
-                                {{ csrf_field() }}
+                            <form id="modal-form" autocomplete="off">
                                 @yield('modalForm')
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -60,19 +59,8 @@
 
             <div class="row">
                 <!-- Table -->
-                <div class="col-md-6">
+                @yield('cols')
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">
-                                @yield('title')
-                            </h3>
-
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="table-responsive">
@@ -91,11 +79,11 @@
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer clearfix">
-                            @yield('button')
-                            <a class="btn btn-sm btn-default btn-flat pull-left" id="open-options"><i
-                                        class="fa fa-cogs"></i></a>
-                            <a class="btn btn-sm btn-default btn-flat pull-left options hidden" id="btn-delete"><i
-                                        class="fa fa-trash"></i></a>
+                                @yield('button')
+                                <a class="btn btn-sm btn-default btn-flat pull-left" id="open-options"><i
+                                            class="fa fa-cogs"></i></a>
+                                <a class="btn btn-sm btn-default btn-flat pull-left options hidden" id="btn-delete"><i
+                                            class="fa fa-trash"></i></a>
                         </div>
                         <!-- /.box-footer -->
                     </div>
@@ -136,22 +124,24 @@
         $(".options").addClass("hidden");
         $("#modal-add").modal("toggle");
     }
+
     function onClickOpenOptions(){
         $(".options").toggleClass("hidden");
     }
+
     function onClickBtnDelete(){
         $(".items:checked").each(function(){
 
             var row = $(this).closest('tr');
             var bookId = row.children('td:first-child').children('input:nth-child(2)').val();
-            var id = $(this).val(); console.log(id);
+            var id = $(this).val();
             var url = @yield('url');
             $.ajax({
                 url : url + id,
                 method : "POST",
                 data : {
                     _token : token,
-                    _method : "DELETE",
+                    _method : "DELETE"
                 },
                 success : function(response) {
                     row.remove();
@@ -161,7 +151,7 @@
                         $('#table').empty();
                         $('#table').append('<p id="p">Não foram encontrados resultados.</p>');
                     }
-//                    console.log(response);
+                    console.log(response);
                 },
                 error : function(response) {
                     console.log(response);

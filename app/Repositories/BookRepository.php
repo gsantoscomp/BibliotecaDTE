@@ -43,4 +43,13 @@ class BookRepository
         return $book;
     }
 
+    public function deleteBook($id)
+    {
+        $query = DB::table('books')
+                ->where('bk_id', $id)
+                ->delete();
+
+        return $query;
+    }
+
 }

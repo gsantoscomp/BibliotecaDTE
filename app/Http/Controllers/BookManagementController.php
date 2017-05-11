@@ -6,6 +6,7 @@ use App\Http\Requests\BookRequest;
 use App\Models\Book;
 use App\Repositories\BookRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class BookManagementController extends Controller
 {
@@ -35,12 +36,13 @@ class BookManagementController extends Controller
          }
     }
 
-    public function destroy(Book $book)
+    public function destroy($id)
     {
 
-        $book->delete();
+        $bookRepository = new BookRepository();
+        $bookRepository->deleteBook($id);
 
-        return new JsonResponse([$book, 200]);
+        return;
 
     }
 }

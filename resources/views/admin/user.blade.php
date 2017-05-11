@@ -62,68 +62,73 @@
 @endsection
 
 @section('url')
-    '/user'
+    "/user/"
 @endsection
 
-{{--@section('scripts')--}}
-    {{--<script type="text/javascript">--}}
-        {{--$(document).ready(function()--}}
-        {{--{--}}
-            {{--//Add user--}}
-            {{--$("#btn-confirm").on("click", function(e)--}}
-            {{--{--}}
-{{--//                e.preventDefault();--}}
+@section('cols')
+    <div class="col-md-6">
+@endsection
 
-                {{--var name = $("#name").val(); console.log(name);--}}
-                {{--var email = $("#email").val(); console.log(email);--}}
-                {{--var password = $("#password").val(); console.log(password);--}}
+@section('scripts')
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            //Add user
+            $("#btn-confirm").on("click", function(e)
+            {
+                e.preventDefault();
 
-                {{--$.ajax({--}}
-                    {{--url : "/user",--}}
-                    {{--method : "POST",--}}
-                    {{--data : {--}}
-                        {{--_token : token,--}}
-                        {{--name : name,--}}
-                        {{--email : email,--}}
-                        {{--password : password--}}
-                    {{--},--}}
-                    {{--success: function(data){--}}
-                        {{--$("#modal-add").modal("toggle");--}}
-                        {{--data = data[0];--}}
-                        {{--var newUser = '<tr>' +--}}
-                            {{--'<td class="options hidden">'+--}}
-                            {{--'<input class="items" type="checkbox" value="'+ data.id +'">' +--}}
-                            {{--'</td>' +--}}
-                            {{--'<td>' + name + '</td>' +--}}
-                            {{--'<td>' + email + '</td>' +--}}
-                            {{--'</tr>';--}}
-                        {{--//Check items--}}
-                        {{--if(isEmpty($('#table').children('tbody').children().length)){--}}
-                            {{--$('#p').remove();--}}
-                            {{--$('#table').empty();--}}
-                            {{--var thead = '<thead>' +--}}
-                                {{--'<tr>' +--}}
-                                {{--'<th class="options hidden">' +--}}
-                                {{--'<input id="check-all" type="checkbox">' +--}}
-                                {{--'</th>' +--}}
-                                {{--'<th>Nome</th>' +--}}
-                                {{--'<th>Email</th>' +--}}
-                                {{--'<th>Privilégio</th>' +--}}
-                                {{--'</tr>' +--}}
-                                {{--'</thead>';--}}
-                            {{--$('#table').append(thead);--}}
-                            {{--$('#table').append('<tbody class="table-body">' + newUser + '</tbody>');--}}
-                        {{--} else {--}}
-                            {{--$('.table-body').append(newUser);--}}
-                        {{--}--}}
-                        {{--$("#btn-delete").on("click", onClickBtnDelete);--}}
-                        {{--$("#check-all").on("click", checkAll);--}}
-                    {{--},--}}
-                    {{--error: function(response){--}}
-                        {{--console.log(response);--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
-{{--@endsection --}}
+                var name = $("#name").val(); console.log(name);
+                var email = $("#email").val(); console.log(email);
+                var password = $("#password").val(); console.log(password);
+
+                $.ajax({
+                    url : "/user",
+                    method : "POST",
+                    data : {
+                        _token : token,
+                        name : name,
+                        email : email,
+                        password : password
+                    },
+                    success: function(data){
+                        $("#modal-add").modal("toggle");
+                        data = data[0];
+                        var newUser = '<tr>' +
+                            '<td class="options hidden">'+
+                            '<input class="items" type="checkbox" value="'+ data.id +'">' +
+                            '</td>' +
+                            '<td>' + name + '</td>' +
+                            '<td>' + email + '</td>' +
+                            '<td><span class="label label-primary">User</span></td>' +
+                            '</tr>';
+                        //Check items
+                        if(isEmpty($('#table').children('tbody').children().length)){
+                            $('#p').remove();
+                            $('#table').empty();
+                            var thead = '<thead>' +
+                                '<tr>' +
+                                '<th class="options hidden">' +
+                                '<input id="check-all" type="checkbox">' +
+                                '</th>' +
+                                '<th>Nome</th>' +
+                                '<th>Email</th>' +
+                                '<th>Privilégio</th>' +
+                                '</tr>' +
+                                '</thead>';
+                            $('#table').append(thead);
+                            $('#table').append('<tbody class="table-body">' + newUser + '</tbody>');
+                        } else {
+                            $('.table-body').append(newUser);
+                        }
+                        $("#btn-delete").on("click", onClickBtnDelete);
+                        $("#check-all").on("click", checkAll);
+                    },
+                    error: function(response){
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+@endsection
