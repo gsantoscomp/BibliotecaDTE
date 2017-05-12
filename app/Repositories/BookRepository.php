@@ -10,19 +10,9 @@ class BookRepository
     public function getBook()
     {
         $query = DB::table('books')
-                    ->join('publishers', 'books.bk_pub_id', 'pub_id')
-                    ->select('books.*', 'pub_name', 'pub_id')
+                    ->select('books.*')
                     ->orderBy('bk_title')
                     ->get();
-
-        return $query;
-    }
-
-    public function getPublisher()
-    {
-        $query = DB::table('publishers')
-            ->select('pub_id', 'pub_name')
-            ->get();
 
         return $query;
     }
@@ -36,7 +26,7 @@ class BookRepository
         $book->bk_owner = $request->bk_owner;
         $book->bk_description = $request->bk_description;
         $book->bk_availability = 'disponivel';
-        $book->bk_pub_id = $request->bk_pub_id;
+        $book->bk_publisher = $request->bk_publisher;
 
         $book->save();
 

@@ -27,17 +27,35 @@ class PermissionsSeeder extends Seeder
             'route' => 'loanmanagement'
         ]);
 
+        $bookDestroy = Permission::create([
+            'name' => 'book.destroy',
+            'route' => 'book.destroy'
+        ]);
+
+        $userDestroy = Permission::create([
+            'name' => 'user.destroy',
+            'route' => 'user.destroy'
+        ]);
+
+        $loanDestroy = Permission::create([
+            'name' => 'loan.destroy',
+            'route' => 'loan.destroy'
+        ]);
+
         $arrPermissions = [
-            $index->id,
             $userManagement->id,
             $bookManagement->id,
-            $loanManagement->id
+            $loanManagement->id,
+            $bookDestroy->id,
+            $userDestroy->id,
+            $loanDestroy->id
         ];
 
         $roleAdmin = Role::where('id', 1)->first();
+        $roleUser = Role::where('id', 2)->first();
 
-//        $roleUSer = Role::where()->first();
 
         $roleAdmin->permissions()->attach($arrPermissions);
+        $roleUser->permissions()->attach($index->id);
     }
 }

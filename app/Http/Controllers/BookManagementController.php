@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
-use App\Models\Book;
 use App\Repositories\BookRepository;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class BookManagementController extends Controller
 {
@@ -14,11 +12,9 @@ class BookManagementController extends Controller
     {
         $bookRepository = new BookRepository();
         $books = $bookRepository->getBook();
-        $publishers = $bookRepository->getPublisher();
 
         return view('admin.book',[
-            'books' => $books,
-            'publishers' => $publishers
+            'books' => $books
         ]);
     }
 

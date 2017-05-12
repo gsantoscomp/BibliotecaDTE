@@ -24,6 +24,18 @@ class SecurityRepository
         return $query;
     }
 
+    public function getRole($id)
+    {
+        $query = DB::table('roles')
+            ->join('users_roles as ur', 'roles.id', '=', 'ur.role_id')
+            ->join('users', 'users.id', '=', 'ur.user_id')
+            ->where('ur.user_id', '=', $id)
+            ->select('roles.*')
+            ->first();
+
+        return $query;
+    }
+
     public function makeCachePermissions($userId)
     {
         $permissions = $this->getPermissions($userId);
@@ -52,6 +64,7 @@ class SecurityRepository
         $permissions = Cache::get('PERMISSIONS_'.$user->id);
 
         if (in_array($route, $permissions)) {
+
             return true;
         }
 

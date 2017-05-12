@@ -54,9 +54,14 @@ class LoginController extends Controller
             $user = Auth::user();
 
             $securityRepository->makeCachePermissions($user->id);
+            $role = $securityRepository->getRole($user->id);
 
             // Authentication passed...
-            return redirect()->intended('/user');
+            if($role->name == 'Admin'){
+                return redirect()->intended('/user'); //Redirect to adm index
+            } else {
+                return redirect()->intended('/index'); //Redirect to user index
+            }
         }
     }
 

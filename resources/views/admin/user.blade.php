@@ -9,7 +9,7 @@
 @endsection
 
 @section('thTable')
-    <th class="options hidden">
+    <th class="options hidden icheck">
         <input id="check-all" type="checkbox">
     </th>
     <th>Nome</th>
@@ -20,9 +20,15 @@
 @section('tableBody')
     @foreach($users as $user)
         <tr>
-            <td class="options hidden">
+            @if($user->role == 'User')
+            <td class="options hidden icheck">
                 <input class="items" type="checkbox" value="{{ $user->id }}">
             </td>
+            @else
+             <td class="options hidden">
+                 <input type="checkbox" disabled>
+             </td>
+            @endif
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>
@@ -95,34 +101,22 @@
                         $("#modal-add").modal("toggle");
                         data = data[0];
                         var newUser = '<tr>' +
-                            '<td class="options hidden">'+
+                            '<td class="options hidden icheck">'+
                             '<input class="items" type="checkbox" value="'+ data.id +'">' +
                             '</td>' +
                             '<td>' + name + '</td>' +
                             '<td>' + email + '</td>' +
                             '<td><span class="label label-primary">User</span></td>' +
                             '</tr>';
-                        //Check items
-                        if(isEmpty($('#table').children('tbody').children().length)){
-                            $('#p').remove();
-                            $('#table').empty();
-                            var thead = '<thead>' +
-                                '<tr>' +
-                                '<th class="options hidden">' +
-                                '<input id="check-all" type="checkbox">' +
-                                '</th>' +
-                                '<th>Nome</th>' +
-                                '<th>Email</th>' +
-                                '<th>Privilégio</th>' +
-                                '</tr>' +
-                                '</thead>';
-                            $('#table').append(thead);
-                            $('#table').append('<tbody class="table-body">' + newUser + '</tbody>');
-                        } else {
+                        console.log(newUser);
                             $('.table-body').append(newUser);
-                        }
-                        $("#btn-delete").on("click", onClickBtnDelete);
-                        $("#check-all").on("click", checkAll);
+                            $("#btn-delete").on("click", onClickBtnDelete);
+                            $('input').iCheck({
+                                checkboxClass: 'icheckbox_square-blue',
+                                radioClass: 'iradio_square-blue',
+                                increaseArea: '20%' // optional
+                            });
+                            $('#check-all').on('ifChecked', onClickCheck);
                     },
                     error: function(response){
                         console.log(response);

@@ -14,7 +14,7 @@
 
     @yield('stylesheets')
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue-light sidebar-mini">
 <div class="wrapper">
 
 @include('layouts.includes.header')
@@ -83,7 +83,7 @@
                                 <a class="btn btn-sm btn-default btn-flat pull-left" id="open-options"><i
                                             class="fa fa-cogs"></i></a>
                                 <a class="btn btn-sm btn-default btn-flat pull-left options hidden" id="btn-delete"><i
-                                            class="fa fa-trash"></i></a>
+                                            class="fa fa-trash"></i> Apagar </a>
                         </div>
                         <!-- /.box-footer -->
                     </div>
@@ -101,9 +101,6 @@
     var token = $("meta[name=csrf-token]").attr("content");
     function clearModal(){
         $(this).find("input,textarea,select").val('').end();
-    }
-    function checkAll(){
-        $(".items").prop('checked', this.checked);
     }
     function dateFormat(date){
         var day = date.getDate();
@@ -127,6 +124,12 @@
 
     function onClickOpenOptions(){
         $(".options").toggleClass("hidden");
+    }
+    function onClickCheck(){
+        $('.icheck').iCheck('check');
+        $('#check-all').on('ifUnchecked', function () {
+            $('.icheck').iCheck('uncheck');
+        });
     }
 
     function onClickBtnDelete(){
@@ -171,10 +174,15 @@
     }
     $(document).ready(function(){
         $("#add").on("click", onClickAdd);
-        $("#open-options").on('click', onClickOpenOptions)
+        $("#open-options").on('click', onClickOpenOptions);
         $("#btn-delete").on("click", onClickBtnDelete);
-        $("#check-all").on("click", checkAll);
         $("#modal-add").on('hidden.bs.modal', clearModal);
+        $('#check-all').on('ifChecked', onClickCheck);
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
     });
 </script>
 

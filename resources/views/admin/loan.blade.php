@@ -14,7 +14,7 @@
 
 @section('thTable')
     @if(count($loans) > 0)
-        <th class="options hidden">
+        <th class="options hidden icheck">
             <input id="check-all" type="checkbox">
         </th>
         <th>Usuário</th>
@@ -30,7 +30,7 @@
 @section('tableBody')
     @foreach ($loans as $loan)
         <tr>
-            <td class="options hidden">
+            <td class="options hidden icheck">
                 <input class="items" type="checkbox" value="{{ $loan->ln_id }}">
                 <input type="hidden" name="ln_bk_id" value="{{ $loan->ln_bk_id }}">
             </td>
@@ -207,7 +207,12 @@
                             $('.table-body').append(newLoan);
                         }
                         $("#btn-delete").on("click", onClickBtnDelete);
-                        $('#check-all').on("click", checkAll);
+                        $('input').iCheck({
+                            checkboxClass: 'icheckbox_square-blue',
+                            radioClass: 'iradio_square-blue',
+                            increaseArea: '20%' // optional
+                        });
+                        $('#check-all').on('ifChecked', onClickCheck);
                     },
                     error: function(data){
                         console.log('moises');

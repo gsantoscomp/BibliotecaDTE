@@ -20,9 +20,8 @@ class CreateBooksTable extends Migration
             $table->string('bk_owner');
             $table->text('bk_description');
             $table->string('bk_availability');
-            $table->integer('bk_pub_id')->unsigned();
+            $table->string('bk_publisher');
             $table->timestamps();
-            $table->foreign('bk_pub_id')->references('pub_id')->on('publishers');
         });
     }
 
