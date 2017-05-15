@@ -11,9 +11,8 @@
 |
 */
 
-Route::group(['middleware' => 'securitymiddleware'], function(){
+Route::group(['middleware' => 'web'], function(){
 
-    Route::get('/', 'HomeController@index')->name('index');
 
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Auth\LoginController@postLogin')->name('login');
@@ -24,6 +23,7 @@ Route::group(['middleware' => 'securitymiddleware'], function(){
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+    Route::get('/index', 'HomeController@index')->name('index');
 
     Route::group([], function() {
         // Admin Routes

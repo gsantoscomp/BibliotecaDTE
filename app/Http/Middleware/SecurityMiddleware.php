@@ -21,7 +21,6 @@ class SecurityMiddleware
         $routeName = $request->route()->getName();
 
         if ($securityRepository->hasPermission($routeName)) {
-
             return $next($request);
         }
 

@@ -64,7 +64,6 @@ class SecurityRepository
         $permissions = Cache::get('PERMISSIONS_'.$user->id);
 
         if (in_array($route, $permissions)) {
-
             return true;
         }
 

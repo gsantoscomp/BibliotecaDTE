@@ -2,31 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ClientRepository;
 use Illuminate\Http\Request;
 use Auth;
 use Cache;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $user = Auth::user();
+        $clientRepository = new ClientRepository();
+        $books = $clientRepository->getAvailableBooks();
 
-        return view('home');
+        return view('user.index', [
+            'books' => $books
+        ]);
     }
 }
