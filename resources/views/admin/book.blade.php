@@ -32,7 +32,7 @@
 @endsection
 
 @section('button')
-    <a class="btn btn-sm btn-primary btn-flat pull-right" id="add">
+    <a class="btn btn-sm bg-aqua-active btn-flat pull-right" id="add">
         Adicionar Livro
         &ensp;<i class="fa fa-plus"></i>
     </a>
@@ -142,6 +142,7 @@
 
                             $('#table').append(thead);
                             $('#table').append('<tbody class="table-body">' + newBook + '</tbody>');
+                            $("#open-options").removeClass('hidden');
                         } else {
                             $('.table-body').append(newBook);
                         }

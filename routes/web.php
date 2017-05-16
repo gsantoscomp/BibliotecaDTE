@@ -23,7 +23,6 @@ Route::group(['middleware' => 'web'], function(){
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
-    Route::get('/index', 'HomeController@index')->name('index');
 
     Route::group([], function() {
         // Admin Routes
@@ -36,6 +35,13 @@ Route::group(['middleware' => 'web'], function(){
         Route::delete('book/{id}', 'BookManagementController@destroy')->name('book.destroy');
 
         Route::get('loan', 'LoanManagementController@index')->name('loanmanagement');
+    });
+
+    Route::group([], function() {
+        //User Routes
+        Route::post('notification', 'NotificationController@store')->name('notification.request');
+
+        Route::get('/index', 'HomeController@index')->name('index');
     });
 
 });

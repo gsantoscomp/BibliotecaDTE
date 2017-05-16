@@ -89,7 +89,8 @@
                     </div>
                 </div>
                 @yield('requests')
-            </div>
+        @yield('notifications')
+    </div>
         </section>
     </div>
     @include('layouts.includes.footer')
@@ -153,6 +154,8 @@
                     if(empty){
                         $('#table').empty();
                         $('#table').append('<p id="p">Não foram encontrados resultados.</p>');
+                        $("#open-options").addClass('hidden');
+                        $("#btn-delete").addClass('hidden');
                     }
                     console.log(response);
                 },
@@ -173,6 +176,9 @@
         }
     }
     $(document).ready(function(){
+        if(isEmpty($("tbody").children().length)){
+            $("#open-options").addClass('hidden');
+        }
         $("#add").on("click", onClickAdd);
         $("#open-options").on('click', onClickOpenOptions);
         $("#btn-delete").on("click", onClickBtnDelete);

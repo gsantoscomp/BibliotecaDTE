@@ -60,6 +60,41 @@
     <div class="col-md-6">
 @endsection
 
+@section('notifications')
+        <div class="col-md-6">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="table" class="table no-margin">
+                            <thead>
+                            <tr>
+                                @if(count($notifications) > 0)
+                                <th>Usuário</th>
+                                <th>Livro</th>
+                                @else
+                                    <p id="p">Nenhuma notificação pendente</p>
+                                @endif
+                            </tr>
+                            </thead>
+                            <tbody class="table-body">
+                                @foreach($notifications as $notification)
+                                <tr>
+                                    <td>{{ $notification->user }}</td>
+                                    <td>{{ $notification->book }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+            <div class="box-footer"></div>
+            </div>
+        </div>
+@endsection
+
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function()
@@ -119,6 +154,7 @@
                                 '</thead>';
                             $('#table').append(thead);
                             $('#table').append('<tbody class="table-body">' + newLoan + '</tbody>');
+                            $("#open-options").removeClass('hidden');
                         } else {
                             $('.table-body').append(newLoan);
                         }

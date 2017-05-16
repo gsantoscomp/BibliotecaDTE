@@ -33,7 +33,7 @@
             <td>{{ $user->email }}</td>
             <td>
                 @if($user->role == 'Admin')
-                    <span class="label label-success">{{ $user->role }}</span>
+                    <span class="label bg-aqua-active">{{ $user->role }}</span>
                 @else
                     <span class="label label-primary">{{ $user->role }}</span>
                 @endif
@@ -43,7 +43,7 @@
 @endsection
 
 @section('button')
-    <a class="btn btn-sm btn-primary btn-flat pull-right" id="add">
+    <a class="btn btn-sm bg-aqua-active btn-flat pull-right" id="add">
         Adicionar Usuário
         &ensp;<i class="fa fa-plus"></i>
     </a>

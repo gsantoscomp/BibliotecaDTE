@@ -2,7 +2,7 @@
 
 @section('profileBox')
     <!-- Profile Image -->
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="https://www.1pcom.net/img/loginhead.jpg"
@@ -26,43 +26,53 @@
             <!-- /.box-body -->
         </div>
     </div>
+    <div class="col-md-1"></div>
 @endsection
 
 @section('myTabs')
-    <div class="col-md-10">
+    <div class="col-md-1"></div>
+    <div class="col-md-7">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#books" data-toggle="tab">Livros Disponíveis</a></li>
+                <li class="active"><a href="#books" data-toggle="tab">Solicitar Livro</a></li>
                 <li><a href="#loans" data-toggle="tab">Meus Empréstimos</a></li>
                 <li><a href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="books">
+                    {{--<div class="box-header clearfix">Selecione um livro.</div>--}}
                     <div class="table-responsive">
-                        <table class="table no-margin">
+                        <table id="table" class="table no-margin">
                             <thead>
                             <tr>
                                 <th>Título</th>
                                 <th>Autor</th>
                                 <th>Editora</th>
-                                <th>Proprietário</th>
-                                <th>Descrição</th>
+                                <th>Opções</th>
                             </tr>
                             </thead>
                             <tbody class="table-body">
                             @foreach($books as $book)
-                                <tr>
+                                <tr id="{{ $book->bk_id }}" class="requestRow">
                                     <td>{{ $book->bk_title }}</td>
                                     <td>{{ $book->bk_author }}</td>
                                     <td>{{ $book->bk_publisher }}</td>
-                                    <td>{{ $book->bk_owner }}</td>
-                                    <td>{{ $book->bk_description }}</td>
+                                    <td>
+                                        <a type="submit" class="btn btn-success bookRequest"> Solicitar
+                                            <i class="fa fa-plus"></i></a>
+                                        <a class="btn btn-info bookInfo"> Info <i class="fa fa-exclamation"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
                     </div>
-
+                    <div class="box-footer clearfix">
+                        <a id="request-loan" class="btn btn-sm btn-primary btn-flat pull-right hidden">
+                            Solicitar Empréstimo
+                            &ensp;<i class="fa fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="loans">
@@ -71,57 +81,7 @@
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="settings">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="inputName" class="col-sm-2 control-label">Name</label>
 
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputName" placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputName" class="col-sm-2 control-label">Name</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputName" placeholder="Name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputExperience" class="col-sm-2 control-label">Experience</label>
-
-                            <div class="col-sm-10">
-                                <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-danger">Submit</button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
                 <!-- /.tab-pane -->
             </div>
@@ -129,4 +89,49 @@
         </div>
         <!-- /.nav-tabs-custom -->
     </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        var token = $("meta[name=csrf-token]").attr("content");
+        function isEmpty(tableLength) {
+            if (tableLength === 0) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).ready(function () {
+            var userId = {{ Auth::id() }};
+
+            $(".bookRequest").on("click", function () {
+                var row = $(this).closest('tr');
+                var bookId = row.attr('id');
+
+                console.log(token + ' ' + userId + ' ' + bookId);
+                $.ajax({
+                    url: "/notification",
+                    method: "post",
+                    data: {
+                        _token: token,
+                        user: userId,
+                        book: bookId,
+                        type: 'request'
+                    },
+                    success: function (data) {
+                        row.remove();
+                        var empty = isEmpty($("tbody").children().length);
+                        if (empty) {
+                            $('#table').empty();
+                            $('#table').append('<p>Nenhum livro disponível para empréstimo</p>');
+                        }
+                    },
+                    error: function () {
+                        console.log('moises');
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
