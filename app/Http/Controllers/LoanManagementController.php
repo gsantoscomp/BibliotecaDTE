@@ -21,4 +21,9 @@ class LoanManagementController extends Controller
             'notifications' => $notifications
         ]);
     }
+
+    public function store($id)
+    {
+
+    }
 }

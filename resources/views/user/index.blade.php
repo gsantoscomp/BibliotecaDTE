@@ -48,7 +48,7 @@
                                 <th>Título</th>
                                 <th>Autor</th>
                                 <th>Editora</th>
-                                <th>Opções</th>
+                                <th style="text-align: center">Opções</th>
                             </tr>
                             </thead>
                             <tbody class="table-body">
@@ -57,12 +57,38 @@
                                     <td>{{ $book->bk_title }}</td>
                                     <td>{{ $book->bk_author }}</td>
                                     <td>{{ $book->bk_publisher }}</td>
-                                    <td>
-                                        <a type="submit" class="btn btn-success bookRequest"> Solicitar
-                                            <i class="fa fa-plus"></i></a>
-                                        <a class="btn btn-info bookInfo"> Info <i class="fa fa-exclamation"></i></a>
+                                    <td style="text-align: center">
+                                        <a class="btn btn-success bookRequest"> Solicitar</a>
+                                        <a data-toggle="modal" data-target="#modal-{{ $book->bk_id }}" class="btn btn-info bookInfo"> Info </a>
                                     </td>
                                 </tr>
+
+                                {{-- Modal --}}
+                                <div class="modal fade" id="modal-{{ $book->bk_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">{{ $book->bk_title }}</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <b>Autor:</b> <br> {{ $book->bk_author }}
+                                                <hr>
+                                                <b>Editora:</b> <br> {{ $book->bk_publisher }}
+                                                <hr>
+                                                <b>Proprietário:</b> <br> {{ $book->bk_owner }}
+                                                <hr>
+                                                <b>Descrição :</b> <br> {{ $book->bk_description }}
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             @endforeach
                             </tbody>
                         </table>
@@ -115,8 +141,8 @@
                     method: "post",
                     data: {
                         _token: token,
-                        user: userId,
-                        book: bookId,
+                        user_id: userId,
+                        book_id: bookId,
                         type: 'request'
                     },
                     success: function (data) {
@@ -134,4 +160,10 @@
             });
         });
     </script>
+@endsection
+
+@section('styles')
+    <style type="text/css" rel="stylesheet">
+
+    </style>
 @endsection

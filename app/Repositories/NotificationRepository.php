@@ -20,7 +20,7 @@ class NotificationRepository
                  ->join('users', 'user_id', 'users.id')
                  ->join('books', 'book_id', 'bk_id')
                  ->where('type', 'request')
-                 ->select('users.name as user', 'books.bk_title as book')
+                 ->select('notifications.id as id', 'users.name as user', 'books.bk_title as book')
                  ->get();
 
         return $query;
@@ -30,8 +30,8 @@ class NotificationRepository
     {
         $notification = new Notification();
 
-        $notification->user_id = $request->user;
-        $notification->book_id = $request->book;
+        $notification->user_id = $request->user_id;
+        $notification->book_id = $request->book_id;
         $notification->type = $request->type;
         $notification->read = false;
 
@@ -40,11 +40,25 @@ class NotificationRepository
         return $notification;
     }
 
-    public function changeBookAvailability($request)
+    public function changeBookAvailability($book_id)
     {
-        $book = Book::find($request->book);
-        $book->bk_availability = 'indisponivel';
+        $book = Book::find($book_id);
+
+        if($book->bk_availability == 'disponivel'){
+            $book->bk_availability = 'indisponivel';
+        } else {
+            $book->bk_availability = 'disponivel';
+        }
 
         $book->save();
+    }
+
+    public function deleteNotification($request)
+    {
+        $query = DB::table('notifications')
+                ->where('id', $request->id)
+                ->delete();
+
+        return $query;
     }
 }
