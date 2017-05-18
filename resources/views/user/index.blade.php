@@ -14,10 +14,10 @@
 
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Empréstimos Requeridos</b> <a class="pull-right">22</a>
+                        <b>Empréstimos Requeridos</b> <a class="pull-right">{{ $openRequests }}</a>
                     </li>
                     <li class="list-group-item">
-                        <b>Livros Pendentes</b> <a class="pull-right">2</a>
+                        <b>Livros Pendentes</b> <a class="pull-right">{{ $overdue }}</a>
                     </li>
                 </ul>
 
@@ -40,7 +40,6 @@
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="books">
-                    {{--<div class="box-header clearfix">Selecione um livro.</div>--}}
                     <div class="table-responsive">
                         <table id="table" class="table no-margin">
                             <thead>
@@ -59,16 +58,19 @@
                                     <td>{{ $book->bk_publisher }}</td>
                                     <td style="text-align: center">
                                         <a class="btn btn-success bookRequest"> Solicitar</a>
-                                        <a data-toggle="modal" data-target="#modal-{{ $book->bk_id }}" class="btn btn-info bookInfo"> Info </a>
+                                        <a data-toggle="modal" data-target="#modal-{{ $book->bk_id }}"
+                                           class="btn btn-info bookInfo"> Info </a>
                                     </td>
                                 </tr>
 
                                 {{-- Modal --}}
-                                <div class="modal fade" id="modal-{{ $book->bk_id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal fade" id="modal-{{ $book->bk_id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                                 <h4 class="modal-title" id="myModalLabel">{{ $book->bk_title }}</h4>
@@ -83,7 +85,9 @@
                                                 <b>Descrição :</b> <br> {{ $book->bk_description }}
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                    Fechar
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -94,15 +98,48 @@
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        <a id="request-loan" class="btn btn-sm btn-primary btn-flat pull-right hidden">
-                            Solicitar Empréstimo
-                            &ensp;<i class="fa fa-plus"></i>
-                        </a>
+
                     </div>
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="loans">
+                    <div class="table-responsive">
+                        <table id="table" class="table no-margin">
+                            <thead>
+                            <tr>
+                                @if(count($loans) > 0)
+                                    <th>Livro</th>
+                                    <th>Data de empréstimo</th>
+                                    <th>Data de devolução</th>
+                                    <th style="text-align:center">Situação</th>
+                                @else
+                                    <p id="p">Nenhum empréstimo efetuado</p>
+                                @endif
+                            </tr>
+                            </thead>
+                            <tbody class="table-body">
+                            @foreach($loans as $loan)
+                                <tr>
+                                    <td>{{ $loan->bk_title }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($loan->ln_date)) }}</td>
+                                    <td>{{ date('d/m/Y', strtotime($loan->ln_due_date)) }}</td>
+                                    <td style="text-align:center">
+                                        @if($loan->ln_status == 0)
+                                            <i class="fa fa-smile-o" style="color:green; font-size:22px"></i>
+                                        @elseif ($loan->ln_status == 1)
+                                            <i class="fa fa-meh-o" style="color:orange; font-size:22px"></i>
+                                        @elseif ($loan->ln_status == 2)
+                                            <i class="fa fa-frown-o" style="color:red; font-size:22px"></i>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
 
+                    </div>
                 </div>
                 <!-- /.tab-pane -->
 
@@ -146,6 +183,7 @@
                         type: 'request'
                     },
                     success: function (data) {
+
                         row.remove();
                         var empty = isEmpty($("tbody").children().length);
                         if (empty) {

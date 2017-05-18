@@ -13,9 +13,15 @@ class HomeController extends Controller
     {
         $clientRepository = new ClientRepository();
         $books = $clientRepository->getAvailableBooks();
+        $loans = $clientRepository->getMyLoans();
+        $openRequests = $clientRepository->getMyNotifications(); //Number of open requests
+        $overdue = $clientRepository->getOverdue();
 
         return view('user.index', [
-            'books' => $books
+            'books' => $books,
+            'loans' => $loans,
+            'openRequests' => $openRequests,
+            'overdue' => $overdue
         ]);
     }
 

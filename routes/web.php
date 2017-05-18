@@ -34,10 +34,11 @@ Route::group(['middleware' => 'web'], function(){
         Route::post('book', 'BookManagementController@store')->name('bookmanagement');
         Route::delete('book/{id}', 'BookManagementController@destroy')->name('book.destroy');
 
-//        Route::post('accept/{id}', 'NotificationController@acceptRequest')->name('notification.accept');
+        Route::delete('accept/{id}', 'NotificationController@acceptRequest')->name('notification.accept');
         Route::delete('decline/{id}', 'NotificationController@declineRequest')->name('notification.decline');
 
         Route::get('loan', 'LoanManagementController@index')->name('loanmanagement');
+        Route::delete('loan/{id}', 'LoanManagementController@destroy')->name('loan.destroy');
     });
 
     Route::group([], function() {

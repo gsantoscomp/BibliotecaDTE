@@ -32,6 +32,19 @@ class BookRepository
 
         return $book;
     }
+    
+    public function changeBookAvailability($book_id)
+    {
+        $book = Book::find($book_id);
+
+        if($book->bk_availability == 'disponivel'){
+            $book->bk_availability = 'indisponivel';
+        } else {
+            $book->bk_availability = 'disponivel';
+        }
+
+        $book->save();
+    }
 
     public function deleteBook($id)
     {

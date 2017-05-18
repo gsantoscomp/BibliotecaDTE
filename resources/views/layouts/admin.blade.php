@@ -137,7 +137,6 @@
         $(".items:checked").each(function(){
 
             var row = $(this).closest('tr');
-            var bookId = row.children('td:first-child').children('input:nth-child(2)').val();
             var id = $(this).val();
             var url = @yield('url');
             $.ajax({
@@ -149,8 +148,8 @@
                 },
                 success : function(response) {
                     row.remove();
-                    $('#loanBookOption' + bookId).removeClass('hidden');
                     var empty = isEmpty($('#table').children('tbody').children().length);
+                    console.log($('#table').children('tbody').children());
                     if(empty){
                         $('#table').empty();
                         $('#table').append('<p id="p">Não foram encontrados resultados.</p>');
@@ -176,6 +175,7 @@
         }
     }
     $(document).ready(function(){
+        console.log($("tbody").children());
         if(isEmpty($("tbody").children().length)){
             $("#open-options").addClass('hidden');
         }

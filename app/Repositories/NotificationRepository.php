@@ -9,7 +9,6 @@
 namespace App\Repositories;
 
 use DB;
-use App\Models\Book;
 use App\Models\Notification;
 
 class NotificationRepository
@@ -38,19 +37,6 @@ class NotificationRepository
         $notification->save();
 
         return $notification;
-    }
-
-    public function changeBookAvailability($book_id)
-    {
-        $book = Book::find($book_id);
-
-        if($book->bk_availability == 'disponivel'){
-            $book->bk_availability = 'indisponivel';
-        } else {
-            $book->bk_availability = 'disponivel';
-        }
-
-        $book->save();
     }
 
     public function deleteNotification($request)

@@ -2,11 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Book;
 use App\Models\Loan;
-use App\Models\Notification;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 class LoanRepository
 {
@@ -21,28 +18,30 @@ class LoanRepository
         return $query;
     }
 
-    public function addLoan($id)
+    public function addLoan($notification)
     {
-//        $notification = Notification::find($id);
-//
-//        $today = new \DateTime();
-//        $due = new \DateTime();
-//        $due->add(new \DateInterval("P14D"));
-//
-//        //New loan
-//        $loan = new Loan();
-//        $loan->ln_user_id = $notification->user_id;
-//        $loan->ln_bk_id = $notification->book_id;
-//        $loan->ln_date = $today;
-//        $loan->ln_due_date = $due;
-//        $loan->ln_status = 0; //On day
-//
-//        //Book status
-//        $book = Book::findOrFail($notification->book_id);
-//        $book->bk_availability = 'indisponivel';
-//
-//        //Save
-//        $book->save();
-//        $loan->save();
+        $loan = new Loan();
+        $today = new \DateTime();
+        $due = new \DateTime();
+        $due->add(new \DateInterval("P14D"));
+
+        $loan->ln_user_id = $notification->user_id;
+        $loan->ln_bk_id = $notification->book_id;
+        $loan->ln_date = $today;
+        $loan->ln_due_date = $due;
+        $loan->ln_status = 0; //On day
+
+        $loan->save();
+
+        return $loan;
+    }
+
+    public function deleteLoan($id)
+    {
+        $query = DB::table('loans')
+            ->where('ln_id', $id)
+            ->delete();
+
+        return $query;
     }
 }

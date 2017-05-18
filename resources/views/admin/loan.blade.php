@@ -53,7 +53,7 @@
 @endsection
 
 @section('url')
-    '/loan'
+    '/loan/'
 @endsection
 
 @section('cols')
@@ -107,7 +107,6 @@
                 $(document).ready(function()
                 {
                     var token = $("meta[name=csrf-token]").attr("content");
-
                     //Add loan
                     $("#btn-confirm").on("click", function(e)
                     {
@@ -202,17 +201,21 @@
                     });
 
                     $(".accept-request").on("click", function(){
-                        var notificationId = $(this).closest('tr').children().children().val();
+                        var row = $(this).closest('tr');
+                        var notificationId = row.children().val();
+
                         $.ajax({
-                            url: '/acceptrequest/' + notificationId,
+                            url: '/accept/' + notificationId,
                             method : 'post',
                             data: {
                                 _token : token,
                                 _method : 'delete',
                             },
                             success: function(data){
+                                console.log('success');
                                 //Delete row from notifications
-                                var empty = isEmpty($('#table').children('tbody').children().length);
+                                row.remove();
+                                var empty = isEmpty($('#request-table').children('tbody').children().length - 1);
                                 if(empty){
                                     $('#request-table').empty();
                                     $('#request-table').append('<p>Nenhum pedido pendente</p>');

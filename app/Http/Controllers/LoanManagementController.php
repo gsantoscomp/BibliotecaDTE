@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Loan;
+use App\Repositories\BookRepository;
 use App\Repositories\LoanRepository;
 use App\Repositories\NotificationRepository;
-use Illuminate\Http\Request;
 
 class LoanManagementController extends Controller
 {
@@ -22,8 +23,17 @@ class LoanManagementController extends Controller
         ]);
     }
 
-    public function store($id)
+    public function destroy($id)
     {
 
+        $loan = Loan::find($id);
+
+        $bookRepository = new BookRepository();
+        $bookRepository->changeBookAvailability($loan->ln_bk_id);
+
+        $loanRepository = new LoanRepository();
+        $loanRepository->deleteLoan($id);
+
+        return;
     }
 }
