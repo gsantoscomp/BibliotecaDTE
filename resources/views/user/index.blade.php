@@ -14,14 +14,13 @@
 
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Empréstimos Requeridos</b> <a class="pull-right">{{ $openRequests }}</a>
+                        <b>Empréstimos Requeridos</b> <a id="openRequests" class="pull-right">{{ $openRequests }}</a>
                     </li>
                     <li class="list-group-item">
                         <b>Livros Pendentes</b> <a class="pull-right">{{ $overdue }}</a>
                     </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Editar</b></a>
             </div>
             <!-- /.box-body -->
         </div>
@@ -36,7 +35,6 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#books" data-toggle="tab">Solicitar Livro</a></li>
                 <li><a href="#loans" data-toggle="tab">Meus Empréstimos</a></li>
-                <li><a href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="books">
@@ -44,13 +42,17 @@
                         <table id="table" class="table no-margin">
                             <thead>
                             <tr>
-                                <th>Título</th>
-                                <th>Autor</th>
-                                <th>Editora</th>
-                                <th style="text-align: center">Opções</th>
+                                @if(count($books) > 0)
+                                    <th>Título</th>
+                                    <th>Autor</th>
+                                    <th>Editora</th>
+                                    <th style="text-align: center">Opções</th>
+                                @else
+                                    <p id="p">Nenhum livro disponível para empréstimo</p>
+                                @endif
                             </tr>
                             </thead>
-                            <tbody class="table-body">
+                            <tbody id="tbody" class="table-body">
                             @foreach($books as $book)
                                 <tr id="{{ $book->bk_id }}" class="requestRow">
                                     <td>{{ $book->bk_title }}</td>
@@ -92,7 +94,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             @endforeach
                             </tbody>
                         </table>
@@ -104,7 +105,7 @@
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="loans">
                     <div class="table-responsive">
-                        <table id="table" class="table no-margin">
+                        <table class="table no-margin">
                             <thead>
                             <tr>
                                 @if(count($loans) > 0)
@@ -141,11 +142,7 @@
 
                     </div>
                 </div>
-                <!-- /.tab-pane -->
 
-                <div class="tab-pane" id="settings">
-
-                </div>
                 <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
@@ -167,10 +164,13 @@
         }
         $(document).ready(function () {
             var userId = {{ Auth::id() }};
+            var aux = 0;
 
             $(".bookRequest").on("click", function () {
+                aux++;
                 var row = $(this).closest('tr');
                 var bookId = row.attr('id');
+                var requests = {{ $openRequests }};
 
                 console.log(token + ' ' + userId + ' ' + bookId);
                 $.ajax({
@@ -183,9 +183,10 @@
                         type: 'request'
                     },
                     success: function (data) {
-
+                        requests += aux;
+                        $("#openRequests").html(requests);
                         row.remove();
-                        var empty = isEmpty($("tbody").children().length);
+                        var empty = isEmpty($("#tbody").children().length);
                         if (empty) {
                             $('#table').empty();
                             $('#table').append('<p>Nenhum livro disponível para empréstimo</p>');

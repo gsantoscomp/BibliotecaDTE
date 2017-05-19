@@ -56,6 +56,18 @@
     '/loan/'
 @endsection
 
+@section('notificationTitle')
+    <div class="col-md-6">
+        <section style="margin-bottom: 10px" class="content-header">
+            <h1>
+                Notificações
+                <small>Gerenciar</small>
+            </h1>
+        </section>
+    </div>
+
+@endsection
+
 @section('cols')
     <div class="col-md-6">
         @endsection
@@ -78,16 +90,18 @@
                                     @endif
                                 </tr>
                                 </thead>
-                                <tbody class="table-body">
+                                <tbody>
                                 {{ csrf_field() }}
                                 @foreach($notifications as $notification)
                                     <tr>
                                         <input type="hidden" value="{{ $notification->id }}">
-                                        <td>{{ $notification->user }}</td>
-                                        <td>{{ $notification->book }}</td>
+                                        <td class="user-value">{{ $notification->user }}</td>
+                                        <td class="book-value">{{ $notification->book }}</td>
                                         <td>
-                                            <a class="btn btn-success accept-request" style="margin-right:5px">Aceitar</a>
-                                            <a class="btn btn-danger decline-request" style="margin-left:5px">Recusar</a>
+                                            <a class="btn btn-success accept-request"
+                                               style="margin-right:5px">Aceitar</a>
+                                            <a class="btn btn-danger decline-request"
+                                               style="margin-left:5px">Recusar</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -97,46 +111,44 @@
                         <!-- /.table-responsive -->
                     </div>
                     <!-- /.box-body -->
-                    <div class="box-footer"></div>
                 </div>
             </div>
         @endsection
 
         @section('scripts')
             <script type="text/javascript">
-                $(document).ready(function()
-                {
+                $(document).ready(function () {
                     var token = $("meta[name=csrf-token]").attr("content");
                     //Add loan
-                    $("#btn-confirm").on("click", function(e)
-                    {
+                    $("#btn-confirm").on("click", function (e) {
                         e.preventDefault();
 
                         var user = $("#loan-form-user").val();
                         var book = $("#loan-form-book").val();
-                        var userName = $('#loanUserOption'+user).text();
-                        var bookName = $('#loanBookOption'+book).text();
+                        var userName = $('#loanUserOption' + user).text();
+                        var bookName = $('#loanBookOption' + book).text();
                         $.ajax({
-                            url : "/loan",
-                            method : "POST",
-                            data : {
-                                _token : token,
-                                user : user,
-                                book : book
+                            url: "/loan",
+                            method: "POST",
+                            data: {
+                                _token: token,
+                                user: user,
+                                book: book
                             },
-                            success: function(data){
+                            success: function (data) {
                                 $("#modal-add").modal("toggle");
-                                $('#loanBookOption'+book).addClass('hidden');
+                                $('#loanBookOption' + book).addClass('hidden');
                                 data = data[0];
                                 var date = new Date();
                                 var dueDate = new Date();
-                                dueDate.setDate(dueDate.getDate() + 14); console.log(dueDate);
+                                dueDate.setDate(dueDate.getDate() + 14);
+                                console.log(dueDate);
                                 date = dateFormat(date);
                                 dueDate = dateFormat(dueDate);
                                 var newLoan = '<tr>' +
-                                    '<td class="options hidden">'+
-                                    '<input class="items" type="checkbox" value="'+ data.ln_id +'">' +
-                                    '<input type="hidden" name="ln_bk_id" value="'+ book +'">' +
+                                    '<td class="options hidden">' +
+                                    '<input class="items" type="checkbox" value="' + data.ln_id + '">' +
+                                    '<input type="hidden" name="ln_bk_id" value="' + book + '">' +
                                     '</td>' +
                                     '<td>' + userName + '</td>' +
                                     '<td>' + bookName + '</td>' +
@@ -145,7 +157,7 @@
                                     '<td style="text-align:center"><i class="fa fa-smile-o" style="color:green; font-size:22px"></i></td>' +
                                     '</tr>';
                                 //Check items
-                                if(isEmpty($('#table').children('tbody').children().length)){
+                                if (isEmpty($('#table').children('tbody').children().length)) {
                                     $('#p').remove();
                                     $('#table').empty();
                                     var thead = '<thead>' +
@@ -169,57 +181,61 @@
                                 $("#btn-delete").on("click", onClickBtnDelete);
                                 $('#check-all').on("click", checkAll);
                             },
-                            error: function(response){
+                            error: function (response) {
                                 console.log(response);
                             }
                         });
                     });
 
-                    $(".decline-request").on("click", function(){
+                    $(".decline-request").on("click", function () {
                         var row = $(this).closest('tr');
                         var notificationId = row.children().val();
 
                         $.ajax({
                             url: '/decline/' + notificationId,
-                            method : 'post',
+                            method: 'post',
                             data: {
-                                _token : token,
-                                _method : 'delete',
+                                _token: token,
+                                _method: 'delete',
                             },
-                            success: function(data){
+                            success: function (data) {
                                 row.remove();
-                                var empty = isEmpty($('#request-table').children('tbody').children().length -1);
-                                if(empty){
+                                var empty = isEmpty($('#request-table').children('tbody').children().length - 1);
+                                if (empty) {
                                     $('#request-table').empty();
                                     $('#request-table').append('<p>Nenhum pedido pendente</p>');
                                 }
                             },
-                            error: function(data){
+                            error: function (data) {
                                 console.log('moises');
                             }
                         });
                     });
 
-                    $(".accept-request").on("click", function(){
+                    $(".accept-request").on("click", function () {
+                        $('.options').addClass('hidden');
                         var row = $(this).closest('tr');
                         var notificationId = row.children().val();
+                        var user = row.children('.user-value').text();
+                        var book = row.children('.book-value').text();
 
                         $.ajax({
                             url: '/accept/' + notificationId,
-                            method : 'post',
+                            method: 'post',
                             data: {
-                                _token : token,
-                                _method : 'delete',
+                                _token: token,
+                                _method: 'delete',
                             },
-                            success: function(data){
+                            success: function (data) {
                                 console.log('success');
                                 //Delete row from notifications
                                 row.remove();
                                 var empty = isEmpty($('#request-table').children('tbody').children().length - 1);
-                                if(empty){
+                                if (empty) {
                                     $('#request-table').empty();
                                     $('#request-table').append('<p>Nenhum pedido pendente</p>');
                                 }
+
                                 //Add row at loans
                                 var date = new Date();
                                 var dueDate = new Date();
@@ -227,23 +243,25 @@
                                 date = dateFormat(date);
                                 dueDate = dateFormat(dueDate);
                                 var newLoan = '<tr>' +
-                                    '<td class="options hidden">'+
-                                    '<input class="items" type="checkbox" value="'+ data.ln_id +'">' +
-                                    '<input type="hidden" name="ln_bk_id" value="'+ book +'">' +
+                                    '<td class="options hidden icheck">' +
+                                        '<input class="items" type="checkbox" value="' + data.ln_id + '">' +
+                                        '<input type="hidden" name="ln_bk_id" value="' + data.ln_bk_id + '">' +
                                     '</td>' +
-                                    '<td>' + userName + '</td>' +
-                                    '<td>' + bookName + '</td>' +
+                                    '<td>' + user + '</td>' +
+                                    '<td>' + book + '</td>' +
                                     '<td>' + date + '</td>' +
                                     '<td>' + dueDate + '</td>' +
-                                    '<td style="text-align:center"><i class="fa fa-smile-o" style="color:green; font-size:22px"></i></td>' +
+                                    '<td style="text-align:center">' +
+                                        '<i class="fa fa-smile-o" style="color:green; font-size:22px"></i>' +
+                                    '</td>' +
                                     '</tr>';
                                 //Check items
-                                if(isEmpty($('#table').children('tbody').children().length)){
+                                if (isEmpty($('#table').children('tbody').children().length)) {
                                     $('#p').remove();
                                     $('#table').empty();
                                     var thead = '<thead>' +
                                         '<tr>' +
-                                        '<th class="options hidden">' +
+                                        '<th class="options hidden icheck">' +
                                         '<input id="check-all" type="checkbox">' +
                                         '</th>' +
                                         '<th>Usuário</th>' +
@@ -255,9 +273,12 @@
                                         '</thead>';
                                     $('#table').append(thead);
                                     $('#table').append('<tbody class="table-body">' + newLoan + '</tbody>');
+                                    $('#open-options').removeClass('hidden');
+                                    $(".options").toggleClass("hidden");
                                 } else {
                                     $('.table-body').append(newLoan);
                                 }
+                                $('#check-all').on('ifChecked', onClickCheck);
                                 $("#btn-delete").on("click", onClickBtnDelete);
                                 $('input').iCheck({
                                     checkboxClass: 'icheckbox_square-blue',
@@ -266,7 +287,7 @@
                                 });
                                 $('#check-all').on('ifChecked', onClickCheck);
                             },
-                            error: function(data){
+                            error: function (data) {
                                 console.log('moises');
                             }
                         });

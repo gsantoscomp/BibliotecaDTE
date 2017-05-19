@@ -21,7 +21,7 @@
         <nav class="navbar navbar-static-top">
             <div>
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand">Livros<b>DTE</b></a>
+                    <a href="#" class="navbar-brand">Biblioteca<b>DTE</b></a>
                 </div>
 
                 <div class="navbar-custom-menu">

@@ -61,10 +61,6 @@
         <label for="password" class="control-label">Senha:</label>
         <input type="password" class="form-control" name="password" id="password">
     </div>
-    {{--<div class="form-group">--}}
-        {{--<label for="password" class="control-label">Confirmar senha:</label>--}}
-        {{--<input type="password" class="form-control" name="confirm-password" id="confirm-password">--}}
-    {{--</div>--}}
 @endsection
 
 @section('url')
@@ -72,7 +68,7 @@
 @endsection
 
 @section('cols')
-    <div class="col-md-6">
+    <div class="col-md-12">
 @endsection
 
 @section('scripts')

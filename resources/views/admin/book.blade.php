@@ -57,9 +57,15 @@
 @section('tableBody')
     @foreach ($books as $book)
         <tr>
+            @if($book->bk_availability == 'disponivel')
             <td class="options hidden icheck">
                 <input class="items" type="checkbox" value="{{ $book->bk_id }}">
             </td>
+            @else
+                <td class="options hidden">
+                    <input type="checkbox" disabled>
+                </td>
+            @endif
             <td>{{ $book->bk_title }}</td>
             <td>{{ $book->bk_author }}</td>
             <td>{{ $book->bk_publisher }}</td>
@@ -119,7 +125,9 @@
                             '<td>' + publisher + '</td>' +
                             '<td>' + owner + '</td>' +
                             '<td>' + description + '</td>' +
-                            '<td style="color:green">Disponível</td>'
+                            '<td>' +
+                                '<span class="label label-success">Disponível</span>' +
+                            '</td>' +
                         '</tr>';
                         console.log(newBook);
                         //Check items

@@ -2,7 +2,7 @@
 
     <a class="logo">
         <span class="logo-mini"><i class="fa fa-coffee"></i></span>
-        <span class="logo-lg">DTE - Livros</span>
+        <span class="logo-lg">Biblioteca<b>DTE</b> </span>
     </a>
 
     <nav class="navbar navbar-static-top">
