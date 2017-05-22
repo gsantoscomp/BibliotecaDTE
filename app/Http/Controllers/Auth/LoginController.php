@@ -48,7 +48,7 @@ class LoginController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if ($this->auth->attempt($credentials, $request->has('remember'))) {
+        if ($this->auth->attempt($credentials)) {
             $securityRepository = new SecurityRepository();
 
             $user = Auth::user();

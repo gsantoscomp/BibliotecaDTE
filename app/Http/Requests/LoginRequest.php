@@ -34,7 +34,7 @@ class LoginRequest extends FormRequest
         return [
             'email.required' => 'Email obrigatório',
             'email.email' => 'Email inválido',
-            'password.required' => 'Senha obrigatória'
+            'password.required' => 'Senha obrigatória',
         ];
     }
 }

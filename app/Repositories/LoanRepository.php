@@ -36,6 +36,30 @@ class LoanRepository
         return $loan;
     }
 
+    public function updateStatus()
+    {
+        $loans = Loan::all();
+
+        foreach($loans as $loan) {
+
+            $today = new \DateTime();
+            $dueDate = new \DateTime($loan->ln_due_date);
+            $dateDiff = date_diff($dueDate, $today);
+
+            if ($dateDiff->d > 0 && $dateDiff->invert == 1) {
+                $loan->ln_status = 0;
+            } else if($dateDiff->d == 0) {
+                $loan->ln_status = 1;
+            } else if($dateDiff->d > 0 && $dateDiff->invert == 0) {
+                $loan->ln_status = 2;
+            }
+
+            $loan->save();
+
+        }
+
+    }
+
     public function deleteLoan($id)
     {
         $query = DB::table('loans')

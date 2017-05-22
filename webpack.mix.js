@@ -39,4 +39,7 @@ mix.copy("node_modules/admin-lte/bootstrap/fonts", "public/fonts");
 mix.copy("node_modules/font-awesome/fonts", "public/fonts");
 
 // Img
-mix.copy("node_modules/admin-lte/dist/img/", "public/img/");
+mix.copy([
+    "node_modules/admin-lte/dist/img/",
+    "resources/assets/img/back.png"
+], "public/img/");

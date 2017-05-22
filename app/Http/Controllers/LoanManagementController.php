@@ -15,6 +15,7 @@ class LoanManagementController extends Controller
         $notificationRepository = new NotificationRepository();
 
         $loans = $loanRepository->getLoan();
+        $loanRepository->updateStatus();
         $notifications = $notificationRepository->getAdminNotifications();
 
         return view('admin.loan',[

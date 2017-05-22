@@ -22,22 +22,21 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
-                    <div class="col-xs-8">
-                        <div class="checkbox icheck">
-                            <label>
-                                <input type="checkbox" name="remember"> Lembrar-me
-                            </label>
-                        </div>
-                    </div>
                     <!-- /.col -->
-                    <div class="col-xs-4">
+                    @if(count($errors) > 0)
+                        <div class="col-xs-8">
+                        @foreach($errors->all() as $error)
+                            <p><span class="label label-danger" style="opacity: 0.8; font-size: 14px">{{ $error }}</span></p>
+                        @endforeach
+                        </div>
+                    @endif
+                    <div class="col-xs-4  pull-right">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Entrar</button>
                     </div>
                     <!-- /.col -->
                 </div>
             </form>
 
-            <a href="#">Esqueci minha senha</a><br>
         </div>
         <!-- /.login-box-body -->
     </div>
@@ -55,3 +54,11 @@
         });
     </script>
 @endsection
+
+@section('background')
+    <style type="text/css" rel="stylesheet">
+        body {
+            background-image: url("public/img/back.png");
+        }
+    </style>
+@endsection    
