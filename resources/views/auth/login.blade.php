@@ -4,10 +4,10 @@
 
 @section('content')
     <div class="login-box">
-        <div class="login-logo">
-            <a href="{{ route('index') }}"><b>Biblioteca</b>DTE</a>
-        </div>
         <!-- /.login-logo -->
+        <div class="login-logo">
+            <a style="color: white" href="{{ route('index') }}"><b>Biblioteca</b>DTE</a>
+        </div>
         <div class="login-box-body">
             <p class="login-box-msg">Entrar no Sistema</p>
 
@@ -55,10 +55,11 @@
     </script>
 @endsection
 
-@section('background')
+@section('stylesheets')
     <style type="text/css" rel="stylesheet">
         body {
-            background-image: url("public/img/back.png");
+            background-color: lightslategrey !important;
         }
+
     </style>
 @endsection    

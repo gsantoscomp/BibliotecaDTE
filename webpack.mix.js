@@ -41,5 +41,5 @@ mix.copy("node_modules/font-awesome/fonts", "public/fonts");
 // Img
 mix.copy([
     "node_modules/admin-lte/dist/img/",
-    "resources/assets/img/back.png"
+    "resources/assets/img/"
 ], "public/img/");
