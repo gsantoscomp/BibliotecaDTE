@@ -42,20 +42,42 @@ class PermissionsSeeder extends Seeder
             'route' => 'loan.destroy'
         ]);
 
-        $arrPermissions = [
+        $notificationRequest = Permission::create([
+            'name' => 'notification.request',
+            'route' => 'notification.request'
+        ]);
+
+        $notificationAccept= Permission::create([
+            'name' => 'notification.accept',
+            'route' => 'notification.accept'
+        ]);
+
+        $notificationDecline= Permission::create([
+            'name' => 'notification.decline',
+            'route' => 'notification.decline'
+        ]);
+
+        $adminPermissions= [
             $userManagement->id,
             $bookManagement->id,
             $loanManagement->id,
             $bookDestroy->id,
             $userDestroy->id,
-            $loanDestroy->id
+            $loanDestroy->id,
+            $notificationAccept->id,
+            $notificationDecline->id
+        ];
+
+        $userPermissions = [
+            $index->id,
+            $notificationRequest->id
         ];
 
         $roleAdmin = Role::where('id', 1)->first();
         $roleUser = Role::where('id', 2)->first();
 
 
-        $roleAdmin->permissions()->attach($arrPermissions);
-        $roleUser->permissions()->attach($index->id);
+        $roleAdmin->permissions()->attach($adminPermissions);
+        $roleUser->permissions()->attach($userPermissions);
     }
 }

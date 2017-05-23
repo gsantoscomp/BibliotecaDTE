@@ -20,7 +20,7 @@ class BookSeeder extends Seeder
             $book->bk_owner = $faker->name;
             $book->bk_publisher = $faker->lastName;
             $book->bk_description = $faker->text;
-            $book->bk_availability = 'disponivel';
+            $book->bk_availability = true;
             $book->save();
         }
     }

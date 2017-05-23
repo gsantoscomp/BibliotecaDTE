@@ -99,9 +99,9 @@
                                         <td class="book-value">{{ $notification->book }}</td>
                                         <td>
                                             <a class="btn btn-success accept-request"
-                                               style="margin-right:5px">Aceitar</a>
+                                               style="margin: 0px 4px 0px; display: inline-block">Aceitar</a>
                                             <a class="btn btn-danger decline-request"
-                                               style="margin-left:5px">Recusar</a>
+                                               style="margin: 0px 4px 0px; display: inline-block">Recusar</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -227,7 +227,7 @@
                                 _method: 'delete',
                             },
                             success: function (data) {
-                                console.log('success');
+
                                 //Delete row from notifications
                                 row.remove();
                                 var empty = isEmpty($('#request-table').children('tbody').children().length - 1);
@@ -255,6 +255,7 @@
                                         '<i class="fa fa-smile-o" style="color:green; font-size:22px"></i>' +
                                     '</td>' +
                                     '</tr>';
+
                                 //Check items
                                 if (isEmpty($('#table').children('tbody').children().length)) {
                                     $('#p').remove();

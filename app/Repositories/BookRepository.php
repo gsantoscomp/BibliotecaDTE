@@ -25,7 +25,7 @@ class BookRepository
         $book->bk_author = $request->bk_author;
         $book->bk_owner = $request->bk_owner;
         $book->bk_description = $request->bk_description;
-        $book->bk_availability = 'disponivel';
+        $book->bk_availability = true;
         $book->bk_publisher = $request->bk_publisher;
 
         $book->save();
@@ -37,11 +37,7 @@ class BookRepository
     {
         $book = Book::find($book_id);
 
-        if($book->bk_availability == 'disponivel'){
-            $book->bk_availability = 'indisponivel';
-        } else {
-            $book->bk_availability = 'disponivel';
-        }
+        $book->bk_availability = $book->bk_availability ? false : true;
 
         $book->save();
     }

@@ -57,7 +57,7 @@
 @section('tableBody')
     @foreach ($books as $book)
         <tr>
-            @if($book->bk_availability == 'disponivel')
+            @if($book->bk_availability)
             <td class="options hidden icheck">
                 <input class="items" type="checkbox" value="{{ $book->bk_id }}">
             </td>
@@ -72,7 +72,7 @@
             <td>{{ $book->bk_owner }}</td>
             <td>{{ $book->bk_description }}</td>
             <td>
-                @if ($book->bk_availability == 'disponivel')
+                @if ($book->bk_availability)
                     <span class="label label-success">Disponível</span>
                 @else
                     <span class="label label-danger">Indisponível</span>

@@ -10,7 +10,7 @@ class ClientRepository
     public function getAvailableBooks()
     {
         $query = DB::table('books')
-                    ->where('bk_availability', 'disponivel')
+                    ->where('bk_availability', true)
                     ->get();
 
         return $query;

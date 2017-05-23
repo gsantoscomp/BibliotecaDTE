@@ -2,7 +2,7 @@
 
 @section('profileBox')
     <!-- Profile Image -->
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="box box-primary">
             <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="https://www.1pcom.net/img/loginhead.jpg"
@@ -25,12 +25,10 @@
             <!-- /.box-body -->
         </div>
     </div>
-    <div class="col-md-1"></div>
 @endsection
 
 @section('myTabs')
-    <div class="col-md-1"></div>
-    <div class="col-md-7">
+    <div class="col-md-8">
         <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#books" data-toggle="tab">Solicitar Livro</a></li>
@@ -172,7 +170,6 @@
                 var bookId = row.attr('id');
                 var requests = {{ $openRequests }};
 
-                console.log(token + ' ' + userId + ' ' + bookId);
                 $.ajax({
                     url: "/notification",
                     method: "post",
@@ -192,8 +189,8 @@
                             $('#table').append('<p>Nenhum livro disponível para empréstimo</p>');
                         }
                     },
-                    error: function () {
-                        console.log('moises');
+                    error: function (data) {
+                        console.log(data);
                     }
                 });
             });
