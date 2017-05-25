@@ -13,7 +13,7 @@ class BookSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create('pt_BR');
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 20; $i++) {
             $book = new Book();
             $book->bk_title = $faker->sentence;
             $book->bk_author = $faker->name;

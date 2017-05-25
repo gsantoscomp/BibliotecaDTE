@@ -79,16 +79,18 @@
                                 @yield('tableBody')
                                 </tbody>
                             </table>
+
                         </div>
                         <!-- /.table-responsive -->
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
                         @yield('button')
-                        <a class="btn btn-sm btn-default btn-flat pull-left" id="open-options"><i
+                        <a class="btn btn-sm btn-default btn-flat" id="open-options"><i
                                     class="fa fa-cogs"></i></a>
-                        <a class="btn btn-sm btn-default btn-flat pull-left options hidden" id="btn-delete"><i
+                        <a class="btn btn-sm btn-default btn-flat options hidden" id="btn-delete"><i
                                     class="fa fa-trash"></i> Apagar </a>
+                        @yield('pagination')
                     </div>
                     <!-- /.box-footer -->
                 </div>

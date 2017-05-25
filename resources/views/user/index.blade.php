@@ -95,9 +95,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="box-footer clearfix">
-
+                        <div class="pull-right" style="margin-right: 40px">{{ $books->links() }}</div>
                     </div>
                 </div>
                 <!-- /.tab-pane -->
@@ -200,6 +198,8 @@
 
 @section('styles')
     <style type="text/css" rel="stylesheet">
-
+        ul .active {
+            color: red !important;
+        }
     </style>
 @endsection

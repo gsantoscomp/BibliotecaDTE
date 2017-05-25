@@ -11,7 +11,7 @@ class ClientRepository
     {
         $query = DB::table('books')
                     ->where('bk_availability', true)
-                    ->get();
+                    ->paginate(6);
 
         return $query;
     }

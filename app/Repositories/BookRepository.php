@@ -12,7 +12,7 @@ class BookRepository
         $query = DB::table('books')
                     ->select('books.*')
                     ->orderBy('bk_title')
-                    ->get();
+                    ->paginate(10);
 
         return $query;
     }

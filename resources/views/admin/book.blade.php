@@ -32,9 +32,7 @@
 @endsection
 
 @section('button')
-    <a class="btn btn-sm bg-aqua-active btn-flat pull-right" id="add">
-        Adicionar Livro
-        &ensp;<i class="fa fa-plus"></i>
+    <a class="btn btn-sm bg-aqua-active btn-flat" id="add"><i class="fa fa-plus"></i>
     </a>
 @endsection
 
@@ -47,7 +45,7 @@
         <th>Autor</th>
         <th>Editora</th>
         <th>Dono</th>
-        <th>Descrição</th>
+        {{--<th>Descrição</th>--}}
         <th>Status</th>
     @else
         <p id="p">Não foram encontrados resultados</p>
@@ -70,7 +68,7 @@
             <td>{{ $book->bk_author }}</td>
             <td>{{ $book->bk_publisher }}</td>
             <td>{{ $book->bk_owner }}</td>
-            <td>{{ $book->bk_description }}</td>
+            {{--<td>{{ $book->bk_description }}</td>--}}
             <td>
                 @if ($book->bk_availability)
                     <span class="label label-success">Disponível</span>
@@ -80,6 +78,12 @@
             </td>
         </tr>
     @endforeach
+@endsection
+
+@section('pagination')
+    <div class="pull-right">
+        {{ $books->links() }}
+    </div>
 @endsection
 
 @section('url')
@@ -95,12 +99,12 @@
         $(document).ready(function(){
             $("#btn-confirm").on("click", function(e){
                 e.preventDefault();
-                var title = $("#bk_title").val(); console.log(title);
-                var author = $("#bk_author").val(); console.log(author);
-                var publisher = $("#bk_publisher").val(); console.log(publisher);
-                var owner = $("#bk_owner").val(); console.log(owner);
-                var description = $("#bk_description").val(); console.log(description);
-                var token = $("meta[name=csrf-token]").attr("content"); console.log(token);
+                var title = $("#bk_title").val();
+                var author = $("#bk_author").val();
+                var publisher = $("#bk_publisher").val();
+                var owner = $("#bk_owner").val();
+                var description = $("#bk_description").val();
+                var token = $("meta[name=csrf-token]").attr("content");
 
                 $.ajax({
                     url : "/book",
@@ -170,4 +174,12 @@
         });
     </script>
 
+@endsection
+
+@section('stylesheets')
+            <style type="text/css" rel="stylesheet">
+                .pagination {
+                    margin :0px;
+                }
+            </style>
 @endsection
